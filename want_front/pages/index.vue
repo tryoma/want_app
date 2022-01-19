@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="user">
+    <p>名前：{{user.name}}</p>
     <AddTodo @submit="addTodo" />
     <TodoList :todos="todos" />
   </div>
@@ -20,8 +21,12 @@
         todos: [],
       };
     },
+    computed: {
+      user() {
+        return this.$store.state.auth.currentUser;
+      }
+    },
     created() {
-      console.log("API_KEY:", process.env.API_KEY);
     },
     methods: {
       async addTodo(title) {
@@ -30,6 +35,19 @@
           title
         });
       },
+    },
+    fetch({
+      store,
+      redirect
+    }) {
+      store.watch(
+        state => state.auth.currentUser,
+        (newUser, oldUser) => {
+          if (!newUser) {
+            return redirect("/login");
+          }
+        }
+      );
     },
   };
 

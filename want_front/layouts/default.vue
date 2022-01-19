@@ -1,5 +1,9 @@
 <template>
   <v-app dark>
+    <div>
+      <Success />
+      <Loading />
+    </div>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -89,30 +93,56 @@
 </template>
 
 <script>
-export default {
-  name: 'DefaultLayout',
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+  import Loading from "@/components/Loading";
+  import Success from "@/components/Success";
+
+  export default {
+    data() {
+      return {
+        clipped: false,
+        drawer: false,
+        fixed: false,
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Want App'
+      }
+    },
+    components: {
+      Loading,
+      Success
+    },
+    computed: {
+      user() {
+        return this.$store.state.auth.currentUser;
+      },
+      items() {
+        if (this.user) {
+          return [{
+              icon: "mdi-apps",
+              title: "TODOS",
+              to: "/"
+            },
+            {
+              icon: "mdi-chart-bubble",
+              title: "MYPAGE",
+              to: "/mypage"
+            }
+          ];
+        } else {
+          return [{
+              icon: "mdi-apps",
+              title: "LOGIN",
+              to: "/login"
+            },
+            {
+              icon: "mdi-chart-bubble",
+              title: "SIGNUP",
+              to: "/signup"
+            }
+          ];
         }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      }
     }
   }
-}
 </script>
