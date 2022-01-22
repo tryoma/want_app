@@ -26,6 +26,14 @@ module WantApi
 
     # Configuration for the application, engines, and railties goes here.
     #
+    # config.generators do |g|
+      # g.skip_routes true # trueの時routes.rbを変更しない
+      # g.helper false # helperファイル生成しない
+      # g.test_framework false # testファイル生成しない
+      # g.assets false # stylesheets, jsファイル生成を生成しない
+      # g.stylesheets false  # js, cssファイルを生成しない
+      # g.javascripts false  # jsファイルのみ生成しない
+    # end
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
