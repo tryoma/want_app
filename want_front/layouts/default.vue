@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <div>
       <Success />
       <Loading />
@@ -88,6 +88,7 @@
       app
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span @click="theme = !theme">画面切替 現在:{{ display }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -105,8 +106,15 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
+        theme: this.$store.state.theme,
         title: 'Want App'
       }
+    },
+    watch: {
+      theme() {
+        this.$store.dispatch("theme", this.theme);
+        this.$vuetify.theme.dark = this.theme;
+      },
     },
     components: {
       Loading,
@@ -115,6 +123,13 @@
     computed: {
       user() {
         return this.$store.state.auth.currentUser;
+      },
+      display() {
+        if (this.theme) {
+          return "ダークモード"
+        } else {
+          return "通常モード"
+        }
       },
       items() {
         if (this.user) {
