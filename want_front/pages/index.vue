@@ -9,14 +9,10 @@
     <div v-if="user">
       <p>ユーザーの進捗</p>
       <!-- <AddTodo @submit="addTodo" /> -->
-      <!-- <TodoList :todos="todos" /> -->
+      <TodoList v-for="(todo, i) in todos"
+        :key="i"
+        :todo="todo" />
       <div class="test2">
-        <UserList v-for="muser in manyusers"
-          :muser="muser"
-          :key="muser.id"
-          exact
-          class="test"
-          />
       </div>
     </div>
   </div>
@@ -25,18 +21,21 @@
 <script>
   import AddTodo from "@/components/AddTodo";
   import TodoList from "@/components/TodoList";
-  import UserList from "@/components/UserList";
   import axios from "@/plugins/axios";
 
   export default {
     components: {
       AddTodo,
-      TodoList,
-      UserList
+      TodoList
     },
     data() {
       return {
-        todos: [],
+        todos: [
+          {
+            id: 1,
+            title: "test"
+          }
+        ],
         manyusers: [
           {
             name: "takubo",
